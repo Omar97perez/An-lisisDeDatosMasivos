@@ -1,61 +1,44 @@
+#-*- coding: utf-8-*-
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-from pandas.plotting import scatter_matrix
+import sys
+import Strategy as st
 
-
-elementoX = 1
-elementoY = 12
+# Pedimos los parámetros que nos van a hacer falta
+elementoX = input('Indique el valor del eje X\n > ')
+elementoY = input('Indique el valor del eje Y\n > ')
+tipoRepresentacion = input('Indique que tipo de representación desea hacer:\n\t 1. Suma \n\t 2. Máximo \n\t 3. Mínimo\n > ')
+tipoGrafica = input('Indique que gráfica desea ver:\n\t 1. Gráfica de Líneas.\n\t 2. Gráfica de Barras.\n\t 3. Gráfica de puntos.\n\t 4. Resumen.\n > ')
 
 #Cargamos los datos de un fichero csv
-file = './TomeCano.csv'
+file = './Data/' + sys.argv[1] 
 df = pd.read_csv(file)
-df = df.groupby(df.columns[elementoX], as_index=False).max()
+
+# Agrupamos los valores por una columna especifica (pasada por linea de comandos)
+if tipoRepresentacion == 1:
+    df = df.groupby(df.columns[elementoX], as_index=False).sum()
+elif tipoRepresentacion == 2:
+    df = df.groupby(df.columns[elementoX], as_index=False).max()
+else:
+    df = df.groupby(df.columns[elementoX], as_index=False).min()
+
 array = df.values
 elementoX = 0
 
-
-#Imprimimos las 5 primeras filas del fichero
-print(df.head(5))
-
-#Cogemos las columnas necesarias X (todas menos la necesaria para estimar) e Y (la columna a estimar)
+# Cogemos las columnas necesarias para las gráficas (pasadas por parámetro)
 X = (array[:,elementoX])
 Y = (array[:,elementoY])
-#Imprimimos el contenido de cada vector
-print("X")
-print(X)
-print("Y")
-print(Y)
 
-# Imprimimos por pantalla los resultados de los algoritmos
-fig = plt.figure()
-fig.suptitle('Gráfico de líneas')
-plt.plot(X, Y)
-plt.ylabel('some numbers')
-plt.show()
-
-
-# Imprimimos por pantalla los resultados de los algoritmos
-plt.suptitle('Gráfico de Barras')
-plt.plot(131)
-plt.bar(X, Y)
-plt.show()
-
-names = ['group_a', 'group_b', 'group_c']
-values = [1, 10, 100]
-
-# Imprimimos por pantalla los resultados de los algoritmos
-plt.suptitle('Gráfico de Puntos')
-plt.scatter(X, Y)
-plt.show()
-
-plt.figure(figsize=(9, 3))
-
-plt.subplot(131)
-plt.bar(X, Y)
-plt.subplot(132)
-plt.scatter(X, Y)
-plt.subplot(133)
-plt.plot(X, Y)
-plt.suptitle('Resumen')
-plt.show()
+# Reprenetamos los valores
+if tipoGrafica == 1:
+    graficaFinal= st.GraficaLineas(X,Y)
+    graficaFinal.grafica()
+elif tipoGrafica == 2:
+    graficaFinal= st.DiagramaBarras(X,Y)
+    graficaFinal.grafica()
+elif tipoGrafica == 3:
+    graficaFinal= st.GraficaPuntos(X,Y)
+    graficaFinal.grafica()
+else:
+    graficaFinal= st.Resumen(X,Y)
+    graficaFinal.grafica()
