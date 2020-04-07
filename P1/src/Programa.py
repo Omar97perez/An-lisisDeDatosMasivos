@@ -31,13 +31,13 @@ Y = (array[:,elementoY])
 
 # Reprenetamos los valores
 if tipoGrafica == 1:
-    graficaFinal= st.GraficaLineas(X,Y)
+    graficaFinal= st.Lineas(X,Y)
     graficaFinal.grafica()
 elif tipoGrafica == 2:
-    graficaFinal= st.DiagramaBarras(X,Y)
+    graficaFinal= st.Barras(X,Y)
     graficaFinal.grafica()
 elif tipoGrafica == 3:
-    graficaFinal= st.GraficaPuntos(X,Y)
+    graficaFinal= st.Puntos(X,Y)
     graficaFinal.grafica()
 else:
     graficaFinal= st.Resumen(X,Y)

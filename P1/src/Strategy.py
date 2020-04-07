@@ -1,31 +1,31 @@
 import matplotlib.pyplot as plt
 
-class Estrategia:
+class Grafica:
     def __init__(self,X, Y):
         self.X = X
         self.Y = Y
 
-class GraficaLineas(Estrategia):
+class Lineas(Grafica):
   def grafica(self):
     fig = plt.figure()
     fig.suptitle('Grafico de lineas')
     plt.plot(self.X, self.Y)
     plt.show()
 
-class DiagramaBarras(Estrategia):
+class Barras(Grafica):
   def grafica(self):
     plt.suptitle('Diagrama de Barras')
     plt.plot(131)
     plt.bar(self.X, self.Y)
     plt.show()
 
-class GraficaPuntos(Estrategia):
+class Puntos(Grafica):
   def grafica(self):
     plt.suptitle('Grafico de Puntos')
     plt.scatter(self.X, self.Y)
     plt.show()
 
-class Resumen(Estrategia):
+class Resumen(Grafica):
   def grafica(self):
     plt.figure(figsize=(9, 3))
     plt.subplot(131)
