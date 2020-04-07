@@ -13,14 +13,16 @@ tipoGrafica = input('Indique que gráfica desea ver:\n\t 1. Gráfica de Líneas.
 #Cargamos los datos de un fichero csv
 file = './Data/' + sys.argv[1] 
 df = pd.read_csv(file)
+nombreElementoX = df.columns[elementoX]
+nombreElementoY = df.columns[elementoY]
 
 # Agrupamos los valores por una columna especifica (pasada por linea de comandos)
 if tipoRepresentacion == 1:
-    df = df.groupby(df.columns[elementoX], as_index=False).sum()
+    df = df.groupby(nombreElementoX, as_index=False).sum()
 elif tipoRepresentacion == 2:
-    df = df.groupby(df.columns[elementoX], as_index=False).max()
+    df = df.groupby(nombreElementoX, as_index=False).max()
 else:
-    df = df.groupby(df.columns[elementoX], as_index=False).min()
+    df = df.groupby(nombreElementoX, as_index=False).min()
 
 array = df.values
 elementoX = 0
@@ -31,14 +33,14 @@ Y = (array[:,elementoY])
 
 # Reprenetamos los valores
 if tipoGrafica == 1:
-    graficaFinal= st.Lineas(X,Y)
+    graficaFinal= st.Lineas(X,Y,nombreElementoX,nombreElementoY)
     graficaFinal.grafica()
 elif tipoGrafica == 2:
-    graficaFinal= st.Barras(X,Y)
+    graficaFinal= st.Barras(X,Y,nombreElementoX,nombreElementoY)
     graficaFinal.grafica()
 elif tipoGrafica == 3:
-    graficaFinal= st.Puntos(X,Y)
+    graficaFinal= st.Puntos(X,Y,nombreElementoX,nombreElementoY)
     graficaFinal.grafica()
 else:
-    graficaFinal= st.Resumen(X,Y)
+    graficaFinal= st.Resumen(X,Y,nombreElementoX,nombreElementoY)
     graficaFinal.grafica()
