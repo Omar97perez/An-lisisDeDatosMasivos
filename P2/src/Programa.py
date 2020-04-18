@@ -8,7 +8,6 @@ import string
 import os
 import sys
 
-
 pedirParametros = int(sys.argv[2]) 
 
 if(pedirParametros == 1):
