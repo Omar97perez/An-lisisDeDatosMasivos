@@ -11,12 +11,14 @@ class Grafica:
         self.nombreFichero = nombreFichero
 
 class Lineas(Grafica):
-  def grafica(self):
-    fig = plt.figure()
-    fig.suptitle('Grafico de lineas')
-    plt.plot(self.X, self.Y)
-    plt.xlabel(self.nombreElementoX)
-    plt.ylabel(self.nombreElementoY)
+  def grafica(self,elementoX, elementoFiltrar, df):
+    colors = "bgrcmykw"
+    color_index = 0
+    for index, row in df.iterrows():
+      plt.plot(row[elementoX],label=row[elementoFiltrar], c=colors[color_index], ls="-", lw="3")
+      color_index += 1
+    plt.xticks(range(len(elementoX)), elementoX)
+    plt.legend()
     if self.nombreFichero:
       plt.savefig(self.nombreFichero)
     else:
@@ -73,8 +75,22 @@ class DiagramaDispersion(Grafica):
     plt.title('Grafico de Dispersion')
     plt.xlabel(self.nombreElementoX)
     plt.ylabel(self.nombreElementoY)
-    plt.show()
+    if self.nombreFichero:
+      plt.savefig(self.nombreFichero)
+    else:
+      plt.show()
 
+class PoligonoFrecuencia(Grafica):
+  def grafica(self):
+    fig = plt.figure()
+    fig.suptitle('Poligono de Frecuencia')
+    plt.plot(self.X, self.Y)
+    plt.xlabel(self.nombreElementoX)
+    plt.ylabel(self.nombreElementoY)
+    if self.nombreFichero:
+      plt.savefig(self.nombreFichero)
+    else:
+      plt.show()
 
 class Resumen(Grafica):
   def grafica(self):
