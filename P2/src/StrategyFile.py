@@ -8,7 +8,7 @@ class File:
         self.fichero = fichero
 
 class Csv(File):
-    def collect(self):
+  def collect(self):
         return pd.read_csv(self.file)
 
 class Json(File):

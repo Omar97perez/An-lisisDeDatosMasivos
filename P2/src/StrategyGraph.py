@@ -19,6 +19,7 @@ class Lineas(Grafica):
       color_index += 1
     plt.xticks(range(len(elementoX)), elementoX)
     plt.legend()
+    plt.suptitle('Gráfica de Líneas')
     if self.nombreFichero:
       plt.savefig(self.nombreFichero)
     else:
@@ -51,8 +52,6 @@ class Circular(Grafica):
   def grafica(self):
     plt.pie(self.Y, labels=self.X, autopct='%1.1f%%', shadow=True, startangle=90)
     plt.suptitle('Grafico Circular')
-    plt.xlabel(self.nombreElementoX)
-    plt.ylabel(self.nombreElementoY)
     if self.nombreFichero:
       plt.savefig(self.nombreFichero)
     else:
