@@ -13,11 +13,19 @@ pedirParametros = int(sys.argv[2])
 
 if(pedirParametros == 1):
     # Pedimos los parámetros que nos van a hacer falta
-    elementoX = input('Indique el valor del eje X\n > ')
-    elementoY = input('Indique el valor del eje Y\n > ')
-    elementoRepresentar = input('Indique los valores del eje X a representar separados por comas. Si desea todos escriba "Todos" o "T". \n > ')
-    tipoRepresentacion = input('Indique que tipo de representación desea hacer:\n\t 1. Suma. \n\t 2. Máximo. \n\t 3. Mínimo. \n\t 4. Ninguno. \n  > ')
-    tipoGrafica = input('Indique que gráfica desea ver:\n\t 1. Gráfica de Líneas.\n\t 2. Gráfica de Barras.\n\t 3. Gráfica de puntos.\n\t 4. Gráfico Circular.\n\t 5. Gráfico de Escaleras.\n\t 6. Gráfico de Dispersión. \n\t 7. Resumen.\n > ')
+    elementoX = int(input('Indique el valor del eje X\n > '))
+    elementoY = int(input('Indique el valor del eje Y\n > '))
+    elementoAgrupar = input('Indique el elemento por el que desea agrupar. Si no desea agrupar clicke enter \n > ')
+    if elementoAgrupar:
+        tipoRepresentacion = int(input('En caso de colisión de datos similares al agrupar ¿Que desea hacer?:\n\t 1. Suma. \n\t 2. Máximo. \n\t 3. Mínimo. \n\t 4. Ninguno. \n  > '))
+    else:
+        tipoRepresentacion = 4
+    elementoFiltrar = input('Indique el elemento por el que desea filtrar. Si no desea filtrar clicke enter \n > ')
+    if elementoFiltrar:
+        elementoRepresentar = input('Indique los valores del eje X a representar separados por comas. Si desea todos escriba "Todos" o "T". \n > ')
+    else:
+        elementoRepresentar = "T"
+    tipoGrafica = int(input('Indique que gráfica desea ver:\n\t 1. Gráfica de Líneas.\n\t 2. Gráfica de Barras.\n\t 3. Gráfica de puntos.\n\t 4. Gráfico Circular.\n\t 5. Gráfico de Escaleras.\n\t 6. Gráfico de Dispersión. \n\t 7. Resumen.\n > '))
     nombreFichero = ""
 else:
     # Pedimos los parámetros que nos van a hacer falta
@@ -26,11 +34,6 @@ else:
     tipoRepresentacion = int(sys.argv[5]) 
     tipoGrafica = int(sys.argv[6]) 
     nombreFichero = sys.argv[7]
-
-if(elementoRepresentar != "Todos" and elementoRepresentar != "T"):
-    elementosEjeX = elementoRepresentar.split(",")
-
-print(elementosEjeX)
 
 #Cargamos los datos de un fichero csv
 file = sys.argv[1] 
@@ -53,20 +56,29 @@ else:
 nombreElementoX = df.columns[elementoX]
 nombreElementoY = df.columns[elementoY]
 
+# Filtramos por las columnas indicadas anteriormente (si procede)
+if(elementoRepresentar != "Todos" and elementoRepresentar != "T"):
+    elementoFiltrar = df.columns[int(elementoFiltrar)]
+    elementosEjeX = elementoRepresentar.split(",")
+    elementosEjeX = df[elementoFiltrar].isin(elementosEjeX)
+    df = df[elementosEjeX]
 
-# Agrupamos los valores por una columna especifica (pasada por linea de comandos)
-if tipoRepresentacion == 1:
-    df = df.groupby(nombreElementoX, as_index=False).sum()
-elif tipoRepresentacion == 2:
-    df = df.groupby(nombreElementoX, as_index=False).max()
-elif tipoRepresentacion == 3:
-    df = df.groupby(nombreElementoX, as_index=False).min()
+# Agrupamos los valores por una columna específica (pasada por linea de comandos)
+if tipoRepresentacion != 4:
+    elementoAgrupar = df.columns[int(elementoAgrupar)]
+    if tipoRepresentacion == 1:
+        df = df.groupby(elementoAgrupar, as_index=False).sum()
+    elif tipoRepresentacion == 2:
+        df = df.groupby(elementoAgrupar, as_index=False).max()
+    elif tipoRepresentacion == 3:
+        df = df.groupby(elementoAgrupar, as_index=False).min()
 
 # Cogemos las columnas necesarias para las gráficas (pasadas por parámetro)
 X = df.loc[:,nombreElementoX]
 Y = df.loc[:,nombreElementoY]
 
-# Reprenetamos los valores
+
+# Representamos los valores
 if tipoGrafica == 1:
     graficaFinal= st.Lineas(X,Y,nombreElementoX,nombreElementoY,nombreFichero)
     graficaFinal.grafica()
