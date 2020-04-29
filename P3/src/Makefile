@@ -1,3 +1,5 @@
+runAlmacenUser:
+	python3 Programa.py ./Data/Prueba.json 1 
 runTomeCanoUser:
 	python3 Programa.py ./Data/TomeCano.csv 1 
 runTomeCanoServer:
