@@ -151,7 +151,6 @@ class HistogramaSeaborn(Grafica):
     fig = plt.figure()
     fig.suptitle('Histograma')
     x = np.random.randn(100)
-    print(df.loc[:,self.nombreElementoY])
     sns.distplot(df.loc[:,self.nombreElementoY])
     if self.nombreFichero:
       plt.savefig(self.nombreFichero)
