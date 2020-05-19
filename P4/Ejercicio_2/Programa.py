@@ -41,12 +41,15 @@ else:
 
 if(pedirParametros == 1):
     algoritmoSeleccionado = int(input('¿Qué algoritmo quiere ejecutar?: \n\t 1. Clasificación Bayesiana (Aprendizaje supervisado de clasificación). \n\t 2. Aprendizaje supervisado de Regresión. \n\t 3. Aprendizaje no supervisado basado en Clustering. \n  > '))
+    columnaSeleccionada = int(input('¿Qué columna quiere alizar?\n > '))
+
 else:
     algoritmoSeleccionado = int(sys.argv[3]) 
+    columnaSeleccionada = int(sys.argv[4])
 
 array = df.values
-X = (array[:,0:12])
-Y = (array[:,12])
+X = (array[:,0:columnaSeleccionada])
+Y = (array[:,columnaSeleccionada])
 
 # Representamos los valores
 if algoritmoSeleccionado == 1:
