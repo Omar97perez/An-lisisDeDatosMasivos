@@ -7,7 +7,6 @@ import StrategyGraph as st
 import StrategyFile as sf
 import string 
 import os
-import sys
 import geopandas as gpd
 
 pedirParametros = int(sys.argv[2]) 
