@@ -49,7 +49,7 @@ else:
     sys.exit()
 
 if(pedirParametros == 1):
-    algoritmoSeleccionado = int(input('¿Qué algoritmo quiere ejecutar?: \n\t 1. Clasificación Bayesiana (Aprendizaje supervisado de clasificación). \n\t 2. Aprendizaje supervisado de Regresión. \n\t 3. Aprendizaje no supervisado basado en Clustering. \n  > '))
+    algoritmoSeleccionado = int(input('¿Qué algoritmo quiere ejecutar?: \n\t 1. Clasificación Bayesiana (Aprendizaje supervisado de clasificación). \n\t 2. Decision Tree Regression (Aprendizaje supervisado de Regresión). \n\t 3. Mean Shift (Aprendizaje no supervisado basado en Clustering). \n  > '))
     columnaSeleccionadaInicial = int(input('¿Qué columna inicial quiere analizar?\n > '))
     columnaSeleccionada = int(input('¿Qué columna final quiere analizar?\n > '))
 
@@ -66,9 +66,11 @@ if algoritmoSeleccionado == 1:
     Y = (array[:,columnaSeleccionada])
     graficaFinal = st.BR(X, Y, pedirParametros)
     graficaFinal.grafica()
-# elif algoritmoSeleccionado == 2:
-#     graficaFinal= st.Barras(X,Y,nombreElementoX,nombreElementoY,nombreFichero)
-#     graficaFinal.grafica()
+elif algoritmoSeleccionado == 2:
+    X = (array[:,columnaSeleccionadaInicial:columnaSeleccionada])
+    Y = (array[:,columnaSeleccionada])
+    graficaFinal= st.DecisionTreeRegression(X, Y, pedirParametros)
+    graficaFinal.grafica()
 elif algoritmoSeleccionado == 3:
     X = (array[:,columnaSeleccionadaInicial:columnaSeleccionada])
     ms = MeanShift(bin_seeding=True)

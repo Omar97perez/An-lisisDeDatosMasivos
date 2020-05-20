@@ -61,6 +61,35 @@ class BR(Algorithm):
         ax.set_xticklabels('BR')
         plt.show()
 
+class DecisionTreeRegression(Algorithm):
+  def grafica(self):
+    validation_size = 0.22
+    seed = 123
+    X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(self.X, self.Y, test_size=validation_size, random_state=seed)
+    model = DecisionTreeRegressor()
+    kfold = model_selection.KFold(n_splits=10, random_state=seed, shuffle=True)
+    cv_results = model_selection.cross_val_score(model, X_train, Y_train, cv=kfold)
+    msg = "%s (%f)" % ('Decision Tree Regression', cv_results.mean())
+
+    model.fit(X_train, Y_train)
+    predictions = model.predict(X_validation)
+
+    fig, ax = plt.subplots()
+    fig.suptitle( msg)
+    ax.scatter(Y_validation, predictions, edgecolors=(0, 0, 0))
+    ax.plot([Y_validation.min(), Y_validation.max()], [Y_validation.min(), Y_validation.max()], 'k--', lw=2)
+    ax.set_xlabel('Medido')
+    ax.set_ylabel('Predecido')
+    plt.show()
+
+    if(self.pedirParametros == 1):
+        fig = plt.figure()
+        fig.suptitle('Diagrama de Cajas y Bigotes para Decision Tree Regression')
+        ax = fig.add_subplot(111)
+        plt.boxplot(cv_results)
+        ax.set_xticklabels('BR')
+        plt.show()
+
 class MeanShift(Algorithm):
   def grafica(self):
     ms = MeanShift(bin_seeding=True)
