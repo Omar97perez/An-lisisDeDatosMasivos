@@ -27,10 +27,11 @@ from sklearn.datasets import make_blobs
 
 
 class Algorithm:
-    def __init__(self, X,Y,pedirParametros):
+    def __init__(self, X,Y,pedirParametros, nombreFichero):
       self.X = X
       self.Y = Y
       self.pedirParametros = pedirParametros
+      self.nombreFichero = nombreFichero
 
 class BR(Algorithm):
   def grafica(self):
@@ -51,7 +52,10 @@ class BR(Algorithm):
     ax.plot([Y_validation.min(), Y_validation.max()], [Y_validation.min(), Y_validation.max()], 'k--', lw=2)
     ax.set_xlabel('Medido')
     ax.set_ylabel('Predecido')
-    plt.show()
+    if self.nombreFichero:
+      plt.savefig(self.nombreFichero)
+    else:
+      plt.show()
 
     if(self.pedirParametros == 1):
         fig = plt.figure()
@@ -80,7 +84,10 @@ class DecisionTreeRegression(Algorithm):
     ax.plot([Y_validation.min(), Y_validation.max()], [Y_validation.min(), Y_validation.max()], 'k--', lw=2)
     ax.set_xlabel('Medido')
     ax.set_ylabel('Predecido')
-    plt.show()
+    if self.nombreFichero:
+      plt.savefig(self.nombreFichero)
+    else:
+      plt.show()
 
     if(self.pedirParametros == 1):
         fig = plt.figure()
@@ -116,4 +123,7 @@ class MeanShift(Algorithm):
         plt.plot(cluster_center[0], cluster_center[1], 'o', markerfacecolor=col,
                 markeredgecolor='k', markersize=14)
     plt.title('Estimated number of clusters: %d' % n_clusters_)
-    plt.show()
+    if self.nombreFichero:
+      plt.savefig(self.nombreFichero)
+    else:
+      plt.show()

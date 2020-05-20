@@ -34,6 +34,7 @@ pedirParametros = int(sys.argv[2])
 file = sys.argv[1] 
 fichero = os.path.splitext(file)
 fichero = fichero[0] + ".csv"
+nombreFichero = ""
 
 if file.endswith('.csv'):
     fileSelected = sf.Csv(file, fichero)
@@ -55,21 +56,21 @@ if(pedirParametros == 1):
 
 else:
     algoritmoSeleccionado = int(sys.argv[3]) 
-    columnaSeleccionada = int(sys.argv[4])
+    columnaSeleccionadaInicial = int(sys.argv[4])
+    columnaSeleccionada = int(sys.argv[5])
+    nombreFichero = sys.argv[6]
 
 array = df.values
 
-
-# Representamos los valores
 if algoritmoSeleccionado == 1:
     X = (array[:,columnaSeleccionadaInicial:columnaSeleccionada])
     Y = (array[:,columnaSeleccionada])
-    graficaFinal = st.BR(X, Y, pedirParametros)
+    graficaFinal = st.BR(X, Y, pedirParametros, nombreFichero)
     graficaFinal.grafica()
 elif algoritmoSeleccionado == 2:
     X = (array[:,columnaSeleccionadaInicial:columnaSeleccionada])
     Y = (array[:,columnaSeleccionada])
-    graficaFinal= st.DecisionTreeRegression(X, Y, pedirParametros)
+    graficaFinal= st.DecisionTreeRegression(X, Y, pedirParametros, nombreFichero)
     graficaFinal.grafica()
 elif algoritmoSeleccionado == 3:
     X = (array[:,columnaSeleccionadaInicial:columnaSeleccionada])
@@ -97,7 +98,10 @@ elif algoritmoSeleccionado == 3:
         plt.plot(cluster_center[0], cluster_center[1], 'o', markerfacecolor=col,
                 markeredgecolor='k', markersize=14)
     plt.title('Estimated number of clusters: %d' % n_clusters_)
-    plt.show()
+    if nombreFichero:
+      plt.savefig(nombreFichero)
+    else:
+      plt.show()
     # graficaFinal = st.MeanShift(X, "", pedirParametros)
     # graficaFinal.grafica()
 else:
