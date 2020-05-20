@@ -1,7 +1,10 @@
-#-*- coding: utf-8-*-
 import matplotlib.pyplot as plt
-import numpy as np
-import seaborn as sns
+import pandas as pd
+import StrategyFile as sf
+import StrategyAlgorithm as st
+import sys
+import string 
+import os
 import geopandas as gpd
 import numpy as np
 from sklearn import datasets, linear_model
@@ -14,6 +17,14 @@ from sklearn.model_selection import cross_val_predict, train_test_split
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from sklearn import model_selection
 from pandas.plotting import scatter_matrix
+from sklearn.cluster import MeanShift, estimate_bandwidth
+from sklearn.datasets import make_blobs
+import numpy as np
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.cluster import MeanShift, estimate_bandwidth
+from sklearn.datasets import make_blobs
+
 
 class Algorithm:
     def __init__(self, X,Y,pedirParametros):
@@ -49,3 +60,31 @@ class BR(Algorithm):
         plt.boxplot(cv_results)
         ax.set_xticklabels('BR')
         plt.show()
+
+class MeanShift(Algorithm):
+  def grafica(self):
+    ms = MeanShift(bin_seeding=True)
+    ms.fit(X)
+    labels = ms.labels_
+    cluster_centers = ms.cluster_centers_
+
+    labels_unique = np.unique(labels)
+    n_clusters_ = len(labels_unique)
+
+    print("number of estimated clusters : %d" % n_clusters_)
+
+    import matplotlib.pyplot as plt
+    from itertools import cycle
+
+    plt.figure(1)
+    plt.clf()
+
+    colors = cycle('bgrcmyk')
+    for k, col in zip(range(n_clusters_), colors):
+        my_members = labels == k
+        cluster_center = cluster_centers[k]
+        plt.plot(X[my_members, 0], X[my_members, 1], col + '.')
+        plt.plot(cluster_center[0], cluster_center[1], 'o', markerfacecolor=col,
+                markeredgecolor='k', markersize=14)
+    plt.title('Estimated number of clusters: %d' % n_clusters_)
+    plt.show()
