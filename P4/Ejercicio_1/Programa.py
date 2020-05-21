@@ -15,6 +15,7 @@ pedirParametros = int(sys.argv[2])
 file = sys.argv[1] 
 fichero = os.path.splitext(file)
 fichero = fichero[0] + ".csv"
+nombreFichero = ""
 
 if file.endswith('.csv'):
     fileSelected = sf.Csv(file, fichero)
@@ -138,7 +139,7 @@ elif tipoGrafica == 13:
     graficaFinal= st.ViolinSeaborn(X,Y,nombreElementoX,nombreElementoY,nombreFichero)
     graficaFinal.grafica(df)
 elif tipoGrafica == 14:
-    graficaFinal= st.GeographicMap("X","X",elementoX,"X","X")
+    graficaFinal= st.GeographicMap("X","X",elementoX,"X",nombreFichero)
     graficaFinal.grafica(map_data)
 else:
     graficaFinal= st.Resumen(X,Y,nombreElementoX,nombreElementoY,nombreFichero)

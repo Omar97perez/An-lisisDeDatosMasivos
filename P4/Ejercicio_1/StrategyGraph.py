@@ -200,7 +200,6 @@ class GeographicMap(Grafica):
     oceanos = "./Data/ne_50m_ocean.shp"
     map_oceanos = gpd.read_file(oceanos)
     map_oceanos.plot(ax=ax, color='#89c0e8', zorder=0)
-    plt.show()
 
     if self.nombreFichero:
       plt.savefig(self.nombreFichero)

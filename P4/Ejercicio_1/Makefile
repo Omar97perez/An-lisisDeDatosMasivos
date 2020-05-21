@@ -1,5 +1,7 @@
 runNatalidadUser:
 	python3 Programa.py ./Data/natalidad.geojson 1 
+runNatalidadServer:
+	python3 Programa.py ./Data/natalidad.geojson 0 14 NAT2018 0 0 0 0 0 ./image.png
 runAccidentesUser:
 	python3 Programa.py ./Data/Accidentes_2016.csv 1 
 runAccidentesServer:
